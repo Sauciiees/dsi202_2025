@@ -1,0 +1,17 @@
+{
+  "name": "week03",
+  "version": "1.0.0",
+  "description": "```sh\r cp -rp _template week03\r cd wee03\r docker stop django_project\r docker rm django_project\r docker compose up --build\r ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4"
+  }
+}
