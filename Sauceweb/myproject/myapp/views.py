@@ -10,6 +10,10 @@ def home(request):
     """View สำหรับหน้าหลัก"""
     return render(request, 'home.html') # render template ชื่อ home.html
 
+def plans(request):
+    """View สำหรับหน้าหลัก"""
+    return render(request, 'plans.html') # render template ชื่อ home.html
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
