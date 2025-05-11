@@ -19,6 +19,9 @@ urlpatterns = [
     path('', views.home, name='home'), # เพิ่ม view สำหรับหน้าหลัก
     path('plans/', views.plans, name='plans'), # เพิ่ม view สำหรับหน้าหลัก
     path('chat/', views.chat, name='chat'), # เพิ่ม view สำหรับหน้าหลัก
+    path('user/', views.user, name='user'),
+    path('accounts/', include('allauth.urls')), # URL สำหรับ allauth
+    
      
     
     

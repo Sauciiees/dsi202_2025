@@ -1,40 +1,85 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>AI Chat</title>
     <style>
         #chat-container {
             border: 1px solid #ccc;
-            height: 300px;
+            height: 600px;
             overflow-y: scroll;
             padding: 10px;
             margin-bottom: 10px;
         }
+
         .user-message {
             text-align: right;
-            margin-bottom: 5px;
-            color: blue;
+            margin-bottom: 10px;
+            color: #007bff;
         }
+
         .ai-message {
             text-align: left;
+            margin-bottom: 10px;
+            color: #212529;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+
+        .ai-message h3 {
+            font-size: 1.2em;
             margin-bottom: 5px;
-            color: green;
+            color: #1a1a1a;
+        }
+
+        .ai-message strong {
+            color: #004085;
+        }
+
+        .ai-message ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .ai-message p {
+            margin-bottom: 10px;
+        }
+
+        .ai-message .warning {
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .ai-message.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-left: 20px;
         }
     </style>
 </head>
-<body>
-    <h1>AI Chat</h1>
-    <div id="chat-container">
-        </div>
-    <div>
-        <input type="text" id="user-input" placeholder="Type your message...">
-        <button onclick="sendToAI()">Send</button>
-    </div>
 
+<body>
+    <h1>AI Health Chat</h1>
+    <div id="chat-container">
+    </div>
+    <div class="chat-controls" style="display: flex; gap: 10px; align-items: center;">
+        
+        <input type="text" id="user-input" placeholder="Type your message..." style="flex-grow: 1;">
+        <button onclick="sendToAI()">Send</button>
+        <button onclick="window.location.href='/plans'">Exit</button>
+    </div>
     <script>
         async function sendToAI() {
             const userInput = document.getElementById('user-input').value;
-            document.getElementById('user-input').value = ''; // Clear input
+            document.getElementById('user-input').value = '';
 
             if (userInput.trim() !== '') {
                 const chatContainer = document.getElementById('chat-container');
@@ -42,18 +87,18 @@
                 chatContainer.scrollTop = chatContainer.scrollHeight;
 
                 try {
-                    const response = await fetch('/api/chat/', { // Your backend endpoint
+                    const response = await fetch('/api/chat/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            // You might need to include an API key or authentication token here
                         },
                         body: JSON.stringify({ message: userInput }),
                     });
 
                     if (response.ok) {
                         const data = await response.json();
-                        chatContainer.innerHTML += `<div class="ai-message">AI: ${data.response}</div>`;
+                        const formattedMessage = formatAIResponse(data.response);  // Format the message
+                        chatContainer.innerHTML += `<div class="ai-message">${formattedMessage}</div>`;
                         chatContainer.scrollTop = chatContainer.scrollHeight;
                     } else {
                         const errorData = await response.json();
@@ -67,7 +112,23 @@
             }
         }
 
-        // You might need a function to handle initial setup or persistent connections
+        function formatAIResponse(response) {
+            // Basic structure with paragraphs and bold
+            let formatted = response.replace(/---/g, '<hr>'); //convert --- to horizontal line
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
+            formatted = formatted.replace(/### (.*)/g, '<h3>$1</h3>'); // Heading 3
+            formatted = formatted.replace(/^- /g, '<li>'); // List items
+            formatted = formatted.replace(/(\n)/g, '<br>');
+            formatted = formatted.replace(/When to Worry:/g, '<span class="warning">When to Worry:</span>');
+
+            // Wrap the whole response in a paragraph if it doesn't start with a heading
+            if (!formatted.startsWith('<h3>')) {
+                formatted = `<p>${formatted}</p>`;
+            }
+
+            return formatted;
+        }
     </script>
 </body>
+
 </html>

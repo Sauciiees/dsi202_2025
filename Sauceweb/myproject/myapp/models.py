@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class DailyReport(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -45,3 +46,13 @@ class Consultation(models.Model):
 
     def __str__(self):
         return f"Consultation for {self.user.username} - {self.consultation_type}"
+    
+class Meal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    calories = models.IntegerField()
+    date_logged = models.DateField(default=timezone.now)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.calories} kcal) on {self.date_logged}"

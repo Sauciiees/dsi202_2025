@@ -37,12 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp',
-    
+    'myapp',  
     'rest_framework',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    
 ]
 
 MIDDLEWARE = [
+    "allauth.account.middleware.AccountMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,7 +55,38 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
+
+
+
+
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '343637693103-nuc6pm4jfg719993anmhs13ur9g17u1l.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+SOCIAL_LOGIN_ON_GET = True
+
+
+
+
+
+
 
 ROOT_URLCONF = 'myproject.urls'
 
@@ -129,4 +165,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+  
+]
+
+
+
+

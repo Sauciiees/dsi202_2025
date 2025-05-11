@@ -9,3 +9,7 @@ jupyterlab==4.0.2
 # tailwindcss, whitenoise, or anything else you use in your project
 Pillow
 djangorestframework
+django-allauth
+django-allauth[socialaccount]
+jwt
+django-crispy-forms

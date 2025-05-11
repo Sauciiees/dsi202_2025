@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -10,6 +10,10 @@ from django.http import JsonResponse
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from .models import Meal
+from django.db.models import Sum
+from django.utils import timezone
 
 def home(request):
     """View สำหรับหน้าหลัก"""
@@ -22,6 +26,10 @@ def plans(request):
 def chat(request):
     """View สำหรับหน้าหลัก"""
     return render(request, 'chat.html') # render template ชื่อ home.html
+
+def user(request):
+    """View สำหรับหน้าหลัก"""
+    return render(request, 'user.html') # render template ชื่อ home.html
 
 
 
@@ -73,7 +81,7 @@ def chat_with_openrouter(request):
                 'Content-Type': 'application/json'
             }
             payload = {
-                'model': 'deepseek/deepseek-chat-v3-0324',  #  <---  Choose your desired model
+                'model': 'deepseek/deepseek-chat:free',  #  <---  Choose your desired model
                 'messages': [{'role': 'user', 'content': user_message}]  #  <---  Format the message for OpenRouter
             }
 
@@ -102,3 +110,9 @@ def chat_with_openrouter(request):
     else:
         # Handle cases where the request method is not POST (e.g., GET, PUT)
         return JsonResponse({'error': 'Method not allowed.'}, status=405)
+    
+
+
+
+
+
