@@ -17,7 +17,9 @@ from django.utils import timezone
 
 def home(request):
     """View สำหรับหน้าหลัก"""
-    return render(request, 'home.html') # render template ชื่อ home.html
+    progress = 320
+    goal = 2000
+    return render(request, 'home.html',{'progress':progress , 'goal':goal}) # render template ชื่อ home.html
 
 def plans(request):
     """View สำหรับหน้าหลัก"""
