@@ -26,12 +26,12 @@
                                     <circle class="text-indigo-500 stroke-current" stroke-width="10"
                                         stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
                                         stroke-dasharray="251.2"
-                                        stroke-dashoffset="calc(251.2 - (251.2 * {{ progress }}) / {{ goal }})"
+                                        stroke-dashoffset="calc(251.2 - (251.2 * {{ net_calories }}) / {{ goal }})"
                                         transform="rotate(-90 50 50)" />
                                     <!-- Center Text -->
                                     <text x="50" y="50" font-family="Verdana" font-size="12" text-anchor="middle"
                                         alignment-baseline="middle" fill="black">
-                                        {{ progress }} cal
+                                        {{ net_calories }} cal
                                     </text>
                                 </svg>
                             </div>
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="flex-col">
                                     <p class="text-xs text-black  mx-1">Food</p>
-                                    <p class="text-xs text-black  font-bold mx-1">{{ progress }}</p>
+                                    <p class="text-xs text-black  font-bold mx-1">{{ total_calories }}</p>
                                 </div>
                             </div>
                             <div class="flex flex-row mt-1">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="flex-col mt-1">
                                     <p class="text-xs text-black  mx-1">Exercise</p>
-                                    <p class="text-xs text-black  font-bold mx-1">0</p>
+                                    <p class="text-xs text-black  font-bold mx-1">{{total_exercise}}</p>
                                 </div>
                             </div>
                         </div>
@@ -148,30 +148,47 @@
             style="background-color: rgb(255, 255, 255); height: 150px; width: 200px; ">
             <div class="flex flex-col">
                 <div>
-                    <h2 class="font-bold text-black ">Steps</h2>
+                    <h2 class="font-bold text-black ">Exercise</h2>
                 </div>
-                <div class=" my-2">
-                    <div class="flex flex-row space-black">
-                        <div id="icon">
-                            <svg class="w-16 h-16 sm:w-9 sm:h-9 text-pink-400 fill-current" viewBox="0 0 24 24"
-                                fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Chicken Drumstick">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M13 6C14.1046 6 15 5.10457 15 4C15 2.89543 14.1046 2 13 2C11.8955 2 11 2.89543 11 4C11 5.10457 11.8955 6 13 6ZM11.0528 6.60557C11.3841 6.43992 11.7799 6.47097 12.0813 6.68627L13.0813 7.40056C13.3994 7.6278 13.5559 8.01959 13.482 8.40348L12.4332 13.847L16.8321 20.4453C17.1384 20.9048 17.0143 21.5257 16.5547 21.8321C16.0952 22.1384 15.4743 22.0142 15.168 21.5547L10.5416 14.6152L9.72611 13.3919C9.58336 13.1778 9.52866 12.9169 9.57338 12.6634L10.1699 9.28309L8.38464 10.1757L7.81282 13.0334C7.70445 13.575 7.17759 13.9261 6.63604 13.8178C6.09449 13.7094 5.74333 13.1825 5.85169 12.641L6.51947 9.30379C6.58001 9.00123 6.77684 8.74356 7.05282 8.60557L11.0528 6.60557ZM16.6838 12.9487L13.8093 11.9905L14.1909 10.0096L17.3163 11.0513C17.8402 11.226 18.1234 11.7923 17.9487 12.3162C17.7741 12.8402 17.2078 13.1234 16.6838 12.9487ZM6.12844 20.5097L9.39637 14.7001L9.70958 15.1699L10.641 16.5669L7.87159 21.4903C7.60083 21.9716 6.99111 22.1423 6.50976 21.8716C6.0284 21.6008 5.85768 20.9911 6.12844 20.5097Z"
-                                    fill="currentColor"></path>
+                <div class="container flex-col">
+                    <div class="flex flex-row mt-1">
+                        <div id="icon" class="w-9 h-9 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                class="w-full h-full">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                </g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M12.8324 21.8013C15.9583 21.1747 20 18.926 20 13.1112C20 7.8196 16.1267 4.29593 13.3415 2.67685C12.7235 2.31757 12 2.79006 12 3.50492V5.3334C12 6.77526 11.3938 9.40711 9.70932 10.5018C8.84932 11.0607 7.92052 10.2242 7.816 9.20388L7.73017 8.36604C7.6304 7.39203 6.63841 6.80075 5.85996 7.3946C4.46147 8.46144 3 10.3296 3 13.1112C3 20.2223 8.28889 22.0001 10.9333 22.0001C11.0871 22.0001 11.2488 21.9955 11.4171 21.9858C10.1113 21.8742 8 21.064 8 18.4442C8 16.3949 9.49507 15.0085 10.631 14.3346C10.9365 14.1533 11.2941 14.3887 11.2941 14.7439V15.3331C11.2941 15.784 11.4685 16.4889 11.8836 16.9714C12.3534 17.5174 13.0429 16.9454 13.0985 16.2273C13.1161 16.0008 13.3439 15.8564 13.5401 15.9711C14.1814 16.3459 15 17.1465 15 18.4442C15 20.4922 13.871 21.4343 12.8324 21.8013Z"
+                                        fill="orange"></path>
+                                </g>
                             </svg>
                         </div>
-                        <div id="temp ">
-                            <p class="text-s text-black font-bold mt-1">2,967</p>
+                        <div class="flex-col mt-1">
+                            <p class="text-xs text-black  mx-1">Exercise</p>
+                            <p class="text-xs text-black  font-bold mx-1">{{total_exercise}}</p>
                         </div>
-                    </div>
-                    <div id="temp">
-                        <p class="text-xs text-black">Goal: 10,000 steps </p>
-                    </div>
-                    <div class="progress mt-1">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20.73%" aria-valuenow="100"
-                            aria-valuemin="0" aria-valuemax="10000"></div>
-                    </div>
 
+                    </div>
+                    <div class="flex flex-row mt-1">
+                        <div id="icon" class="w-7 h-7 flex items-center justify-center mt-1">
+                            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 3V8.41421L10.2929 11.7071L11.7071 10.2929L9 7.58579V3H7Z"
+                                        fill="orange"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="flex-col mt-1">
+                            <p class="text-xs text-black  mx-2.5">Time</p>
+                            <p class="text-xs text-gray-400  font-bold mx-2.5">00:00 hr</p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,17 +197,56 @@
         <p class="text-xs text-black font-bold">Dsicovery</p>
     </div>
     <div class="card container justify-center flex flex-row mt-1" style="width: 10rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-
+        <div class="card-body justify-center items-center ">
+            <div id="icon" class="w-7 h-7 flex items-center justify-center mt-1">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"
+                    stroke="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <circle style="fill:#263A7A;" cx="256" cy="256" r="256"></circle>
+                        <path style="fill:#121149;"
+                            d="M510.012,287.999l-80.5-83.496l-2.843,0.153l-25.783-25.783l3.989,79.136h-168.32l-79.136-79.136 l-25.41,61.166l-0.533-0.533l-49.223,67.744L288.103,510C403.853,495.518,495.576,403.763,510.012,287.999z">
+                        </path>
+                        <rect x="147.79" y="228.952" style="fill:#FFFFFF;" width="216.419" height="54.105"></rect>
+                        <rect x="147.79" y="256" style="fill:#D0D1D3;" width="216.419" height="27.052"></rect>
+                        <path style="fill:#FFC91B;"
+                            d="M147.792,337.156h-27.053c-7.47,0-13.526-6.056-13.526-13.526V188.369 c0-7.47,6.056-13.526,13.526-13.526h27.052c7.47,0,13.526,6.056,13.526,13.526v135.261 C161.318,331.1,155.262,337.156,147.792,337.156z">
+                        </path>
+                        <path style="fill:#EAA22F;"
+                            d="M107.213,256v67.631c0,7.47,6.056,13.526,13.526,13.526h27.052c7.47,0,13.526-6.056,13.526-13.526 V256H107.213z">
+                        </path>
+                        <path style="fill:#FF7F4F;"
+                            d="M98.816,310.105H88.56c-4.639,0-8.399-3.76-8.399-8.399v-91.412c0-4.639,3.76-8.399,8.399-8.399 h10.256c4.639,0,8.399,3.76,8.399,8.399v91.412C107.213,306.345,103.453,310.105,98.816,310.105z">
+                        </path>
+                        <path style="fill:#D35933;"
+                            d="M80.162,256v45.706c0,4.637,3.76,8.399,8.399,8.399h10.256c4.639,0,8.399-3.76,8.399-8.399V256 H80.162z">
+                        </path>
+                        <path style="fill:#FFC91B;"
+                            d="M364.208,174.844h27.052c7.47,0,13.526,6.056,13.526,13.526v135.261 c0,7.47-6.056,13.526-13.526,13.526h-27.052c-7.47,0-13.526-6.056-13.526-13.526V188.369 C350.682,180.9,356.738,174.844,364.208,174.844z">
+                        </path>
+                        <path style="fill:#EAA22F;"
+                            d="M350.682,256v67.631c0,7.47,6.056,13.526,13.526,13.526h27.052c7.47,0,13.526-6.056,13.526-13.526 V256H350.682z">
+                        </path>
+                        <path style="fill:#FF7F4F;"
+                            d="M413.184,201.895h10.256c4.639,0,8.399,3.76,8.399,8.399v91.412c0,4.639-3.76,8.399-8.399,8.399 h-10.256c-4.639,0-8.399-3.76-8.399-8.399v-91.412C404.787,205.655,408.547,201.895,413.184,201.895z">
+                        </path>
+                        <path style="fill:#D35933;"
+                            d="M404.787,256v45.706c0,4.637,3.76,8.399,8.399,8.399h10.256c4.639,0,8.399-3.76,8.399-8.399V256 H404.787z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
+            <h5 class="card-title">Workout</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Sweating is self-care</h6>
             <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+
         </div>
-    
+
 
     </div>
-    
+
 
 
 </body>

@@ -2,17 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-class DailyReport(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
+class Diary(models.Model):
+    meal = models.CharField(max_length=100)
+    food = models.CharField(max_length=100 )
     calories = models.IntegerField()
-    heart_rate = models.IntegerField()
-    steps = models.IntegerField()
-    sleep_hours = models.FloatField()
-    water_liters = models.FloatField()
-
-    def __str__(self):
-        return f"Daily Report for {self.user.username} on {self.date}"
+    exercise = models.IntegerField(default=0)
 
 class ExercisePlan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

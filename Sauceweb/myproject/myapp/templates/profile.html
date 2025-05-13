@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}Home{% endblock %}
+{% block content %}
+<div class="container text-center">
+    <img src="{{ profile_picture }}" class="rounded-circle d-block mx-auto" style="width: 50px; height: 50px;">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <p>Email: {{ user.email }}</p> <!-- Fixed: user.email instead of user.username -->
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p> <!-- Fixed typo: "Last Name Name" -->
+    <p>Date Joined: {{ user.date_joined }}</p>
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>
+{% endblock %}

@@ -11,5 +11,5 @@ Pillow
 djangorestframework
 django-allauth
 django-allauth[socialaccount]
-jwt
+pyjwt
 django-crispy-forms

@@ -9,7 +9,7 @@ from . import views
 urlpatterns = [
     # Existing frontend URLs
     path('', home, name='home'),
-    path('plans/', plans, name='plans'),
+    path('plans/', views.plans, name='plans'),
     path('chat/', chat, name='chat'),
     path('user/', user, name='user'),
     path('api/chat/', views.chat_with_openrouter, name='chat_with_openrouter'),

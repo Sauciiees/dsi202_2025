@@ -1,203 +1,51 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
-{% block head %}Home{% endblock %}
+{% block title %}Plans{% endblock %}
+{% block head %}Plans{% endblock %}
 {% block content %}
-
-<body class="bg-gray-100 antialiased">
-    <div class="container mx-auto items-center justify-center flex flex-row ">
-        <div class="bg-navy shadow-2xl p-6 rounded-2xl border-2 border-gray-50 "
-            style="background-color: rgb(7, 7, 53); height: 400px;">
-            <div class="flex flex-col">
-                <div>
-                    <h2 class="font-bold text-white text-center">Luch 12:00</h2>
-                </div>
-                <div class="my-6">
-                    <div class="flex flex-row space-x-4 items-center">
-                        <div id="icon">
-                            <span>
-                                <svg class="w-20 h-20 fill-stroke text-yellow-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                                    </path>
-                                </svg>
-                            </span>
-                        </div>
-                        <div id="temp">
-
-                            <p class="text-xs text-white">Protein: </p>
-                            <p class="text-xs text-white">Carb: </p>
-                            <p class="text-xs text-white">Fiber: </p>
-                            <p class="text-xs text-white">Fat: </p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class=" flex-col ">
-            <div class="bg-navy shadow-2xl p-6 rounded-2xl border-2 border-gray-50"
-                style="background-color: rgb(7, 7, 53);">
-                <div class="flex flex-col">
-                    <div>
-                        <h2 class="font-bold text-white text-center">Luch 12:00</h2>
-                    </div>
-                    <div class="my-6">
-                        <div class="flex flex-row space-x-4 items-center">
-                            <div id="icon">
-                                <span>
-                                    <svg class="w-20 h-20 fill-stroke text-yellow-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                                        </path>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div id="temp">
-
-                                <p class="text-xs text-white">Protein: </p>
-                                <p class="text-xs text-white">Carb: </p>
-                                <p class="text-xs text-white">Fiber: </p>
-                                <p class="text-xs text-white">Fat: </p>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="bg-navy shadow-2xl p-6 rounded-2xl border-2 border-gray-50"
-                style="background-color: rgb(7, 7, 53);">
-                <div class="flex flex-col">
-                    <div>
-                        <h2 class="font-bold text-white text-center">Luch 12:00</h2>
-                    </div>
-                    <div class="my-6">
-                        <div class="flex flex-row space-x-4 items-center">
-                            <div id="icon">
-                                <span>
-                                    <svg class="w-20 h-20 fill-stroke text-yellow-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                                        </path>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div id="temp">
-
-                                <p class="text-xs text-white">Protein: </p>
-                                <p class="text-xs text-white">Carb: </p>
-                                <p class="text-xs text-white">Fiber: </p>
-                                <p class="text-xs text-white">Fat: </p>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Meal</th>
+            <th scope="col">Food</th>
+            <th scope="col">calories</th>
+            <th scope="col">Exercise</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Diary in all_diaries %}
+        <tr>
+            <td>{{Diary.meal}}</td>
+            <td>{{Diary.food}}</td>
+            <td>{{Diary.calories}}</td>
+            <td>{{Diary.exercise}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<form class="row g-3" method="post" action="{% url 'plans' %}">
+    {% csrf_token %}
+    <label for="Meal" class="form-label">Meal</label>
+    <select class="form-select" aria-label="Default select example" name="meal">
+        <option selected>Options</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+    </select>
+    <div class="col-md-6 form-group">
+        <label for="Food" class="form-label">Food</label>
+        <input type="text" class="form-control" id="food" name="food">
     </div>
-    <div class="container mx-auto items-center justify-center flex flex-row ">
-        <div class="bg-navy shadow-2xl p-6 rounded-2xl border-2 border-gray-50"
-            style="background-color: rgb(7, 7, 53); height: 400px;">
-            <div class="flex flex-col">
-                <div>
-                    <h2 class="font-bold text-white text-center">Luch 12:00</h2>
-                </div>
-                <div class="my-6">
-                    <div class="flex flex-row space-x-4 items-center">
-                        <div id="icon">
-                            <span>
-                                <svg class="w-20 h-20 fill-stroke text-yellow-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                                    </path>
-                                </svg>
-                            </span>
-                        </div>
-                        <div id="temp">
-
-                            <p class="text-xs text-white">Protein: </p>
-                            <p class="text-xs text-white">Carb: </p>
-                            <p class="text-xs text-white">Fiber: </p>
-                            <p class="text-xs text-white">Fat: </p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class=" flex-col ">
-            <div class="bg-navy shadow-2xl p-6 rounded-2xl border-2 border-gray-50"
-                style="background-color: rgb(7, 7, 53);">
-                <div class="flex flex-col">
-                    <div>
-                        <h2 class="font-bold text-white text-center">Luch 12:00</h2>
-                    </div>
-                    <div class="my-6">
-                        <div class="flex flex-row space-x-4 items-center">
-                            <div id="icon">
-                                <span>
-                                    <svg class="w-20 h-20 fill-stroke text-yellow-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                                        </path>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div id="temp">
-
-                                <p class="text-xs text-white">Protein: </p>
-                                <p class="text-xs text-white">Carb: </p>
-                                <p class="text-xs text-white">Fiber: </p>
-                                <p class="text-xs text-white">Fat: </p>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="bg-navy shadow-2xl p-6 rounded-2xl border-2 border-gray-50"
-                style="background-color: rgb(7, 7, 53);">
-                <div class="flex flex-col">
-                    <div>
-                        <h2 class="font-bold text-white text-center">Luch 12:00</h2>
-                    </div>
-                    <div class="my-6">
-                        <div class="flex flex-row space-x-4 items-center">
-                            <div id="icon">
-                                <span>
-                                    <svg class="w-20 h-20 fill-stroke text-yellow-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-                                        </path>
-                                    </svg>
-                                </span>
-                            </div>
-                            <div id="temp">
-
-                                <p class="text-xs text-white">Protein: </p>
-                                <p class="text-xs text-white">Carb: </p>
-                                <p class="text-xs text-white">Fiber: </p>
-                                <p class="text-xs text-white">Fat: </p>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-6 form-group">
+        <label for="inputPassword4" class="form-label">Calories</label>
+        <input type="number" class="form-control" id="calories" name="calories">
     </div>
-</body>
+    <div class="col-12 form-group">
+        <label for="inputAddress" class="form-label">Exercise</label>
+        <input type="number" class="form-control" id="exercise" name="exercise" placeholder="(exercise calories)">
+    </div>
+    <div class="col-12">
+        <input type="submit" class="btn btn-primary" value="Add">
+    </div>
+</form>
 
 {% endblock %}

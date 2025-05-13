@@ -1,17 +1,17 @@
 # health_app/serializers.py
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import DailyReport, ExercisePlan, MealPlan, Consultation
+from .models import Diary, ExercisePlan, MealPlan, Consultation
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
 
-class DailyReportSerializer(serializers.ModelSerializer):
+class DiarySerializer(serializers.ModelSerializer):
     user = UserSerializer()  # Nested serializer เพื่อแสดงข้อมูลผู้ใช้
     class Meta:
-        model = DailyReport
+        model = Diary
         fields = '__all__'
 
 class ExercisePlanSerializer(serializers.ModelSerializer):
