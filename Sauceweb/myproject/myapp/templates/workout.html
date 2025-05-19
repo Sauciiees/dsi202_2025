@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dsicovery{% endblock %}
+{% block head %}Workout{% endblock %}
+{% block content %}
+
+
+<body class="bg-gray-100 antialiased ">
+    {% for all_workout in all_workouts %}
+    <div class="container mx-auto items-center justify-center flex flex-row mt-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{{ all_workout.image.url }}" alt="{{ all_workouts.description }}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title font-bold">{{all_workout.title}}</h5>
+                <p class="card-text">{{ all_workout.description }}</p>
+                <a href="#" class="btn btn-primary">Enroll now</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+
+{% endblock %}

@@ -3,12 +3,20 @@
 {% block head %}Plans{% endblock %}
 {% block content %}
 <table class="table">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <thead>
         <tr>
             <th scope="col">Meal</th>
             <th scope="col">Food</th>
             <th scope="col">calories</th>
             <th scope="col">Exercise</th>
+            <th scope="col"> </th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +26,7 @@
             <td>{{Diary.food}}</td>
             <td>{{Diary.calories}}</td>
             <td>{{Diary.exercise}}</td>
+            <td><a href="delete/{{Diary.food}}" class="btn btn-danger">delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

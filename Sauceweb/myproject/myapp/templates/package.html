@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}Home{% endblock %}
+{% block content %}
+<div class="container flex flex-row justify-center gap-3">
+    <div class="card" style="width: 18rem;">
+        <img src="../media/1199524.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Super package</h5>
+            
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Ads-free</li>
+            <li class="list-group-item">personal plan</li>
+            <li class="list-group-item">new customization</li>
+        </ul>
+        <div class="card-body">
+             <a href="{% url 'promptpay_payment' %}?amount=100" class="btn btn-warning">100 THB</a>
+            
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <img src="../media/1199524.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Max package</h5>
+            
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">all in super tier</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'promptpay_payment' %}?amount=200" class="btn btn-warning">200 THB</a>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

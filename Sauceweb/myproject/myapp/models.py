@@ -8,6 +8,11 @@ class Diary(models.Model):
     calories = models.IntegerField()
     exercise = models.IntegerField(default=0)
 
+class Workout(models.Model):
+    title = models.CharField(max_length=100)  # Example field
+    image = models.ImageField(upload_to='', blank=True, null=True)
+    description = models.CharField(max_length=300)  # Example field
+
 class ExercisePlan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     exercise_type = models.CharField(max_length=100)

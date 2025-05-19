@@ -13,3 +13,6 @@ django-allauth
 django-allauth[socialaccount]
 pyjwt
 django-crispy-forms
+qrcode
+promtpay_qr
+libscrc

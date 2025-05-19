@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}Home{% endblock %}
+{% block content %}
+<div class="container mx-auto flex flex-col items-center justify-center text-center p-4">
+    <h1 class="text-2xl font-bold mb-4">ชำระเงินผ่าน PromptPay</h1>
+    <p class="mb-2">จำนวนเงิน: {{ amount }} บาท</p>
+    <p class="mb-6">เบอร์โทรศัพท์: {{ phone_number }}</p>
+
+    <div class="flex justify-center mb-6">
+        <img src="data:image/png;base64,{{ qr_code }}" alt="PromptPay QR Code" class="mx-auto">
+    </div>
+
+    <p class="mb-6">สแกน QR Code ด้านบนเพื่อชำระเงิน</p>
+
+  
+</div>
+{% endblock %}

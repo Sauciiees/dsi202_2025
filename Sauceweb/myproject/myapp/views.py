@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .models import Diary, ExercisePlan, MealPlan, Consultation
+from .models import Diary, ExercisePlan, MealPlan, Consultation, Workout
 from .serializers import UserSerializer, DiarySerializer, ExercisePlanSerializer, MealPlanSerializer, ConsultationSerializer
 import json
 from django.http import JsonResponse
@@ -15,6 +15,11 @@ from .models import Meal
 from django.db.models import Sum
 from django.utils import timezone
 from allauth.socialaccount.models import SocialAccount
+from django.contrib import messages
+from .utils import generate_promptpay_qr
+
+
+
 
 def home(request):
     """View สำหรับหน้าหลัก"""
@@ -28,6 +33,12 @@ def home(request):
     progress = 320
     goal = 2000
     return render(request, 'home.html',{'progress':progress , 'goal':goal,'net_calories':net_calories , 'total_calories':total_calories,'total_exercise':total_exercise }) # render template ชื่อ home.html
+
+def delete(request,Diary_food):
+    diary = Diary.objects.get(food=Diary_food)
+    diary.delete()
+    messages.success(request, 'Data deleted') # แสดงข้อความเมื่อบันทึกข้อมูลสำเร็จ
+    return redirect('/plans') # redirect ไปที่หน้า home หลังจากบันทึกข้อมูลเสร็จ
 
 def plans(request):
     all_diaries = Diary.objects.all() # ดึงข้อมูลทั้งหมดจากโมเดล Diary
@@ -46,6 +57,7 @@ def plans(request):
             exercise=exercise
         )
         diary.save()
+        messages.success(request, 'Data added') # แสดงข้อความเมื่อบันทึกข้อมูลสำเร็จ
         return redirect('/plans') # redirect ไปที่หน้า home หลังจากบันทึกข้อมูลเสร็จ
     else:
         return render(request, 'plans.html',{'all_diaries':all_diaries , 'total_calories':total_calories}) # render template ชื่อ home.html
@@ -53,6 +65,12 @@ def plans(request):
 def chat(request):
     """View สำหรับหน้าหลัก"""
     return render(request, 'chat.html') # render template ชื่อ home.html
+
+def workout(request):
+    """View สำหรับหน้าหลัก"""
+    all_workouts = Workout.objects.all() # ดึงข้อมูลทั้งหมดจากโมเดล Workout
+    return render(request, 'workout.html' ,{'all_workouts':all_workouts } ) 
+
 
 def user(request):
     """View สำหรับหน้าหลัก"""
@@ -63,6 +81,29 @@ def user(request):
         return render(request, 'profile.html', {'user': request.user ,'profile_picture': profile_picture })
     else:
         return render(request, 'user.html') # render template ชื่อ home.html
+    
+def package(request):
+    
+   
+    return render(request, 'package.html' ) 
+    
+def promptpay_payment(request):
+    # เบอร์โทรศัพท์คงที่ (เปลี่ยนเป็นเบอร์ของคุณ)
+    PROMPTPAY_PHONE = '0969496560'
+    
+    # รับจำนวนเงินจาก request (อาจมาจาก form หรือ parameter)
+    amount = float(request.GET.get('amount', 0))
+    
+    # สร้าง QR Code
+    qr_img = generate_promptpay_qr(PROMPTPAY_PHONE, amount)
+    
+    context = {
+        'qr_code': qr_img,
+        'amount': amount,
+        'phone_number': PROMPTPAY_PHONE
+    }
+    
+    return render(request, 'prompt_pay.html', context)
 
 
 
