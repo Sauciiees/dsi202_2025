@@ -98,3 +98,6 @@ Open a pull request.
 Please ensure your code follows Django’s best practices and includes relevant tests.
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+
+youtube links for application videos: https://youtube.com/shorts/HfgeggrQhH8?feature=share
