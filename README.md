@@ -42,7 +42,7 @@ A web browser to access the application at localhost:8000.
 
 Installation
 
-Clone the Repository:Clone the Careme repository from GitHub:git clone https://github.com/username/careme.git
+Clone the Repository:Clone the Careme repository from GitHub:git clone https://github.com/Sauciiees/dsi202_2025?tab=readme-ov-file
 cd careme
 
 
